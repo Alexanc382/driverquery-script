@@ -3,7 +3,6 @@ import subprocess
 
 # запускаем утилиту
 res = subprocess.run("driverquery", capture_output=True, text=True, encoding="cp866")
-print(res.stdout)
 
 # создается новый файл с результатами запуска
 try:
@@ -18,5 +17,14 @@ except UnicodeDecodeError:
 except Exception as e:
     print(e)
 
+# из нового файла выводятся только строки где есть тип драйверов File System
+try:
+    with open("driverquery-output.txt", "r", encoding="utf-8") as file:
+        lines = file.readlines()
+        for line in lines:
+            if "File System" in line:
+                print(line, end="")
+except Exception as e:
+    print(e)
 
 
